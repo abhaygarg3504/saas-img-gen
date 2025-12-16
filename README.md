@@ -156,7 +156,7 @@ This project is licensed under the ISC License.
 
 ## Support
 
-For support, email support@saasimg-gen.com or create an issue in this repository.
+For support, email abhaygarg5684@gmail.com or create an issue in this repository.
 
 ---
 
