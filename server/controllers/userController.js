@@ -175,15 +175,12 @@ export const razorPayInstance = new Razorpay({
   export const verifyRazorPay = async (req, res) => {
     try {
       const { razorpay_order_id } = req.body;
-  
-      // Fetch order info from Razorpay using the correct field
       const orderInfo = await razorPayInstance.orders.fetch(razorpay_order_id);
   
       if (!orderInfo || !orderInfo.receipt) {
         return res.json({ success: false, message: "Invalid Order Info" });
       }
-  
-      // Find transaction using receipt (stored as _id in transactionModel)
+
       const transactionData = await transactionModel.findById(orderInfo.receipt);
       if (!transactionData) {
         return res.json({ success: false, message: "Transaction not found" });
@@ -192,8 +189,6 @@ export const razorPayInstance = new Razorpay({
       if (transactionData.payment) {
         return res.json({ success: false, message: "Payment Already Processed" });
       }
-  
-      // Update user credits
       const userData = await userModel.findById(transactionData.userId);
       if (!userData) {
         return res.json({ success: false, message: "User not found" });
@@ -201,7 +196,6 @@ export const razorPayInstance = new Razorpay({
   
       const updatedCreditBalance = userData.creditBalance + transactionData.credits;
   
-      // Update user's credits and mark transaction as paid
       await userModel.findByIdAndUpdate(userData._id, {
         creditBalance: updatedCreditBalance,
       });

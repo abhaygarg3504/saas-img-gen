@@ -11,7 +11,7 @@ const AppContextProvider = (props) => {
   const [token, settoken] = useState(localStorage.getItem("token") || "");
   const [credit, setcredit] = useState(false);
 
-  const backendURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:4000";  
+  const backendURL = import.meta.env.VITE_BACKEND_URL;  
 
   const navigate = useNavigate();
 
